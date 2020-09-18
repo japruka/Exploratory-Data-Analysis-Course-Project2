@@ -1,0 +1,11 @@
+library(dplyr)
+NEI <- readRDS("summarySCC_PM25.rds")
+SCC_names <- readRDS("Source_Classification_Code.rds")
+Br<-which(NEI$fips==24510)
+Bal<-NEI[Br,]
+g<-group_by(Bal,year)
+s<-summarise(g,total_emissions=sum(Emissions))
+df<-data.frame(s)
+plot(df$year,log(df$total_emissions),xlab="year",ylab = "total_emissions")
+dev.copy(png,file="Plot2.png")
+dev.off()
